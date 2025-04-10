@@ -35,9 +35,9 @@ async function init() {
 
   //create SQL statement to insert 3 new rows of data into our table
   SQL = `
-    INSERT INTO flavors(txt, ranking) VALUES('Make RESTful API', 5);
-    INSERT INTO flavors(ranking, txt) VALUES(4, 'Create a POST endpoint');
-    INSERT INTO flavors(txt) VALUES('Create a GET endpoint');
+    INSERT INTO flavors(name, is_favorite) VALUES('Make RESTful API', 5);
+    INSERT INTO flavors(is_favorite, name) VALUES(4, 'Create a POST endpoint');
+    INSERT INTO flavors(name) VALUES('Create a GET endpoint');
   `;
 
   //wait for the database to process the query
@@ -66,9 +66,9 @@ server.use(require("morgan")("dev")); //logs the requests received to the server
 server.post("/api/flavors", async (req, res, next) => {
   try {
     //create the SQL query to create a new note based on the information in the request body
-    const SQL = `INSERT INTO flavors(txt) VALUES($1) RETURNING *;`;
+    const SQL = `INSERT INTO flavors(name) VALUES($1) RETURNING *;`;
     //await the response from the client querying the database
-    const response = await client.query(SQL, [req.body.txt]);
+    const response = await client.query(SQL, [req.body.name]);
     //send the response
     res.send(response.rows[0]);
   } catch (error) {
@@ -94,11 +94,11 @@ server.get("/api/flavors", async (req, res, next) => {
 server.put("/api/flavors/:id", async (req, res, next) => {
   try {
     //create the SQL query to update the flavor with the selected id
-    const SQL = `UPDATE flavors SET txt=$1, ranking=$2, updated_at=now() WHERE id=$3 RETURNING *;`;
+    const SQL = `UPDATE flavors SET name=$1, is_favorite=$2, updated_at=now() WHERE id=$3 RETURNING *;`;
     //await the response from the client querying the database
     const response = await client.query(SQL, [
-      req.body.txt,
-      req.body.ranking,
+      req.body.name,
+      req.body.is_favorite,
       req.params.id,
     ]);
     //send the response. If no status code is given express will send 200 by default
