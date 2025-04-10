@@ -76,10 +76,10 @@ server.post("/api/flavors", async (req, res, next) => {
   }
 });
 
-//READ - returns an array of note objects
+//READ - returns an array of flavors objects
 server.get("/api/flavors", async (req, res, next) => {
   try {
-    //create the SQL query to select all the notes in descending order based on when they were created
+    //create the SQL query to select all the flavors in descending order based on when they were created
     const SQL = `SELECT * FROM flavors ORDER BY created_at DESC;`;
     //await the response from the client querying the database
     const response = await client.query(SQL);
@@ -90,10 +90,10 @@ server.get("/api/flavors", async (req, res, next) => {
   }
 });
 
-//UPDATE - edits a note based on the id passed and information within the request body
+//UPDATE - edits a flavor based on the id passed and information within the request body
 server.put("/api/flavors/:id", async (req, res, next) => {
   try {
-    //create the SQL query to update the note with the selected id
+    //create the SQL query to update the flavor with the selected id
     const SQL = `UPDATE flavors SET txt=$1, ranking=$2, updated_at=now() WHERE id=$3 RETURNING *;`;
     //await the response from the client querying the database
     const response = await client.query(SQL, [
@@ -111,7 +111,7 @@ server.put("/api/flavors/:id", async (req, res, next) => {
 //DELETE
 server.delete("/api/flavors/:id", async (req, res, next) => {
   try {
-    //create the SQL query to delete a note by id
+    //create the SQL query to delete a flavor by id
     const SQL = `DELETE FROM flavors WHERE id=$1;`;
     //await the response from the client querying the database
     await client.query(SQL, [req.params.id]);
