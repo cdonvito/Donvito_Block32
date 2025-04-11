@@ -62,7 +62,7 @@ server.use(require("morgan")("dev")); //logs the requests received to the server
 //U - UPDATE --> PUT
 //D - DELETE --> DELETE
 
-//CREATE - adds a new note to the table
+//CREATE - adds a new flavor to the table
 server.post("/api/flavors", async (req, res, next) => {
   try {
     //create the SQL query to create a new note based on the information in the request body
