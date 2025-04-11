@@ -23,7 +23,7 @@ async function init() {
     CREATE TABLE flavors(
         id SERIAL PRIMARY KEY,
         name VARCHAR(255),
-        is_favorite INTEGER DEFAULT 3 NOT NULL, 
+        is_favorite BOOLEAN DEFAULT False NOT NULL, 
         created_at TIMESTAMP DEFAULT now(),
         updated_at TIMESTAMP DEFAULT now()
     );
@@ -35,9 +35,9 @@ async function init() {
 
   //create SQL statement to insert 3 new rows of data into our table
   SQL = `
-    INSERT INTO flavors(name, is_favorite) VALUES('Make RESTful API', 5);
-    INSERT INTO flavors(is_favorite, name) VALUES(4, 'Create a POST endpoint');
-    INSERT INTO flavors(name) VALUES('Create a GET endpoint');
+    INSERT INTO flavors(name, is_favorite) VALUES('Chocolate', true);
+    INSERT INTO flavors(is_favorite, name) VALUES(false, 'Vanilla');
+    INSERT INTO flavors(name) VALUES('Strawberry');
   `;
 
   //wait for the database to process the query
