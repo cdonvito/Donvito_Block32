@@ -90,6 +90,20 @@ server.get("/api/flavors", async (req, res, next) => {
   }
 });
 
+//READ - returns an array of flavors objects
+server.get("/api/flavors/:id", async (req, res, next) => {
+  try {
+    //create the SQL query to select all the flavors in descending order based on when they were created
+    const SQL = `SELECT FROM flavors WHERE id=$1;`;
+    //await the response from the client querying the database
+    const response = await client.query(SQL, [req.params.id]);
+    //send the response. If no status code is given express will send 200 by default
+    res.send(response.rows);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //UPDATE - edits a flavor based on the id passed and information within the request body
 server.put("/api/flavors/:id", async (req, res, next) => {
   try {
